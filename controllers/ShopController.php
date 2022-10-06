@@ -1,13 +1,17 @@
 <?php
 
 namespace app\controllers;
+
+use app\models\Category;
 use yii\web\Controller;
 
 class ShopController extends Controller
 {
+
 	public function actionIndex()
 	{
-		return $this->render('index');
+		$categories = Category::find()->all(); #получение данных из бд
+		return $this->render('index', compact('categories'));
 	}
 
 	public function actionStore(){
