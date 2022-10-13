@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\Category;
+use app\models\Product;
+use yii\data\Pagination;
 use yii\web\Controller;
 
 class ShopController extends Controller
@@ -15,7 +17,11 @@ class ShopController extends Controller
 	}
 
 	public function actionStore(){
-		return $this->render('shop');
+		$query = Product::find(); #получение данных из бд
+		$pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 9]);
+		$products = $query->offset($pages->offset)->limit($pages->limit)->all();
+
+		return $this->render('shop', compact('products', 'pages'));
 	}
 
 	public function actionDetail(){
